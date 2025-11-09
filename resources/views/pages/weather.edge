@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Prakiraan Cuaca Jakarta</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  @vite(['resources/css/app.scss', 'resources/js/app.js'])
+
+</head>
+
+<body>
+
+  <main class="container my-4">
+
+    <h1 class="mb-3">🌦️ Prakiraan Cuaca Jakarta</h1>
+    
+    <div id="weather-container">
+      <div id="loading" class="d-flex align-items-center">
+        <div class="spinner-border spinner-border-sm me-2" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <strong>Memuat data cuaca...</strong>
+      </div>
+    </div>
+  
+  </main>
+
+  <script>
+    // Fungsi untuk memformat tanggal agar mudah dibaca
+    function formatWaktu(isoString) {
+      const date = new Date(isoString)
+      return date.toLocaleString('id-ID', {
+        day: '2-digit',
+        month: 'long',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        timeZoneName: 'short'
+      })
+    }
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      const container = document.getElementById('weather-container')
+      const loadingEl = document.getElementById('loading')
+
+      try {
+        const response = await fetch('/api/weather')
+        if (!response.ok) {
+          throw new Error('Gagal mengambil data dari server')
+        }
+
+        const data = await response.json()
+
+        // Buat struktur tabel dengan class Bootstrap
+        let tableHTML = `
+          <table class="table table-striped table-hover shadow-sm">
+            <thead class="table-dark">
+              <tr>
+                <th>Waktu (time)</th>
+                <th>Suhu (temperature_2m)</th>
+              </tr>
+            </thead>
+            <tbody>
+        `
+
+        data.forEach(item => {
+          tableHTML += `
+            <tr>
+              <td>${formatWaktu(item.time)}</td>
+              <td><strong>${item.temperature} °C</strong></td>
+            </tr>
+          `
+        })
+
+        tableHTML += `
+            </tbody>
+          </table>
+        `
+        
+        // replace loading dengan table
+        container.innerHTML = tableHTML
+
+        // alert buat error
+      } catch (error) {
+        console.error('Error:', error)
+        loadingEl.outerHTML = `
+          <div class="alert alert-danger" role="alert">
+            <strong>Gagal memuat data cuaca.</strong> Silakan coba lagi nanti.
+          </div>
+        `
+      }
+    })
+  </script>
+
+</body>
+</html>
