@@ -3,16 +3,20 @@
 ## Installation
 
 ### 1. Install AdonisJS
+
 ```bash
 npm init adonisjs@latest -- -K=web #inisiasi AdonisJS dengan API kit dan FrontEnd native Kit
 cd weather-app
 ```
 
 ### 2. Install Bootsrap 5.3
+
 ```bash
 npm install -D vite bootstrap bootstrap-icons @popperjs/core sass #install bootstrap css framework
 ```
+
 - edit vite.config.ts jadi seperti ini
+
 ```bash
 import { defineConfig } from 'vite'
 import adonisjs from '@adonisjs/vite/client'
@@ -47,37 +51,48 @@ export default defineConfig({
   ],
 })
 ```
-- tambahkan 
-```bash 
+
+- tambahkan
+
+```bash
 @import 'bootstrap/scss/bootstrap';
 $bootstrap-icons-font-dir: 'bootstrap-icons/font/fonts/';
 @import 'bootstrap-icons/font/bootstrap-icons.scss';
-``` 
+```
+
 di resources/css/app.scss
-- tambahkan 
-```bash 
+
+- tambahkan
+
+```bash
 import bootstrap from 'bootstrap'
-``` 
+```
+
 di resources/css/app.js
 
 ### 3. Recheck Pre-requisites
+
 ```bash
 npm install #recheck installation
 ```
 
 ### 4. Create Routes
+
 ```bash
 node ace list:routes
 ---
 - edit start/routes.ts
-#tambahkan 
+#tambahkan
 import WeathersController from '#controllers/weathers_controller'
 router.get('/weather', [WeathersController, 'renderPage'])
 router.get('/api/weather', [WeathersController, 'getApiData'])
 ```
+
 ### 5. Create Controller & Configure
+
 - node ace make:controller WeatherController
 - edit file controller
 
 ### 6. Create Pages
-- buat weather.edge di resources -> views/pages 
+
+- buat weather.edge di resources -> views/pages
