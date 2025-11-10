@@ -52,7 +52,7 @@ export default defineConfig({
 })
 ```
 
-- tambahkan
+- tambahkan di resources/css/app.scss
 
 ```bash
 @import 'bootstrap/scss/bootstrap';
@@ -60,15 +60,11 @@ $bootstrap-icons-font-dir: 'bootstrap-icons/font/fonts/';
 @import 'bootstrap-icons/font/bootstrap-icons.scss';
 ```
 
-di resources/css/app.scss
-
-- tambahkan
+- tambahkan di resources/css/app.scss
 
 ```bash
 import bootstrap from 'bootstrap'
 ```
-
-di resources/css/app.js
 
 ### 3. Recheck Pre-requisites
 
