@@ -12,7 +12,9 @@ export default class WeathersController {
    * ini handler untuk /api/weather
    */
   public async getApiData({ response }: HttpContext) {
-    const API_URL:URL = new URL('https://api.open-meteo.com/v1/forecast?latitude=-6.2&longitude=106.8&hourly=temperature_2m')
+    const API_URL = new URL(
+      'https://api.open-meteo.com/v1/forecast?latitude=-6.2&longitude=106.8&hourly=temperature_2m'
+    )
 
     try {
       interface WeatherApiResponse {
@@ -21,13 +23,13 @@ export default class WeathersController {
           temperature_2m: number[]
         }
       }
-      const apiResponse:Response = await fetch(API_URL)
+      const apiResponse: Response = await fetch(API_URL)
 
       if (!apiResponse.ok) {
         return response.status(500).json({ error: 'Gagal mengambil data external' })
       }
 
-      const data:any = await apiResponse.json()
+      const data: any = await apiResponse.json()
 
       //ngeproses data
       const processedData = data.hourly.time.map((time: string, index: number) => {
@@ -43,5 +45,4 @@ export default class WeathersController {
       return response.status(500).json({ error: 'Terjadi kesalahan data external' })
     }
   }
-
 }
